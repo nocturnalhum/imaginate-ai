@@ -2,26 +2,16 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 214, 219, 220;
-  --background-end-rgb: 255, 255, 255;
+.customSlider-track {
+  @apply top-1.5 h-2 rounded-2xl bg-[#DDD];
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --foreground-rgb: 255, 255, 255;
-    --background-start-rgb: 0, 0, 0;
-    --background-end-rgb: 0, 0, 0;
-  }
+.customSlider-track.customSlider-track-0 {
+  @apply bg-[rgb(104,117,217)];
 }
-
-body {
-  color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
+.customSlider-thumb {
+  @apply w-5 h-5 rounded-full outline-none cursor-pointer bg-[rgb(104,117,217)] hover:shadow-thumb;
+}
+.customSlider-mark {
+  @apply cursor-pointer top-1.5 w-[1.5px] h-2 bg-black;
 }
