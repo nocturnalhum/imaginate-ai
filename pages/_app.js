@@ -1,5 +1,10 @@
-import '@/styles/globals.css'
+import AppStore from '@/contextAPI/context';
+import '@/styles/globals.css';
 
 export default function App({ Component, pageProps }) {
-  return <Component {...pageProps} />
+  return (
+    <AppStore>
+      <Component {...pageProps} />
+    </AppStore>
+  );
 }

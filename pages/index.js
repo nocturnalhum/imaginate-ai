@@ -2,9 +2,10 @@ import React, { useState } from 'react';
 import Card1 from '@/components/Card1';
 import Card2 from '@/components/Card2';
 import Header from '@/components/Header';
+import { useCanvasContext } from '@/contextAPI/context';
 
 export default function Home() {
-  const [isFlipped, setIsFlipped] = useState(false);
+  const { isFlipped, setIsFlipped } = useCanvasContext();
 
   const handleFlip = () => {
     setIsFlipped(!isFlipped);
