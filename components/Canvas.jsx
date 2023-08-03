@@ -63,8 +63,6 @@ export default function Canvas() {
       localStorage.setItem('drawing', drawing);
       contextRef.current.closePath();
       setIsDrawing(false);
-      addAction(drawing);
-      console.log('Current Position Set:', currentPosition);
     };
 
     // ============================================================================

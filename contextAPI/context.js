@@ -8,7 +8,7 @@ export default function AppStore({ children }) {
   const [prediction, setPrediction] = useState(null);
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState(null);
-  const [error, setError] = useState(null);
+  const [error, setError] = useState('Errors');
   const [color, setColor] = useState('#000');
   const [radius, setRadius] = useState(5);
   const [isModalOpen, setIsModalOpen] = useState(false);
