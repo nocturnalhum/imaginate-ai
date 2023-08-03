@@ -15,3 +15,9 @@
 .customSlider-mark {
   @apply cursor-pointer top-1.5 w-[1.5px] h-2 bg-black;
 }
+
+.glass-border {
+  @apply shadow-inner border-2  
+  border-gray-600/70 border-r-gray-400 border-t-gray-500
+  bg-gradient-to-br from-gray-100/10 to-gray-500/30 rounded-2xl;
+}

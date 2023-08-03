@@ -1,6 +1,13 @@
 import React from 'react';
+import { useCanvasContext } from '@/contextAPI/context';
 
-export default function Header({ onFlip }) {
+export default function Header() {
+  const { isFlipped, setIsFlipped } = useCanvasContext();
+
+  const handleFlip = () => {
+    setIsFlipped(!isFlipped);
+  };
+
   return (
     <div className='flex h-16 w-full text-gray-100'>
       <div className='flex justify-start items-center flex-1 gap-3'>
@@ -22,7 +29,7 @@ export default function Header({ onFlip }) {
       </div>
       <div className='flex justify-end items-center flex-1'>
         <button
-          onClick={onFlip}
+          onClick={handleFlip}
           className='px-10 py-1 bg-slate-900 rounded-full'
         >
           Flip
