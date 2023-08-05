@@ -134,7 +134,7 @@ export default function Canvas({ elementRef }) {
       onTouchStart={handleTouchStart}
       onTouchMove={handleTouchMove}
       onTouchEnd={handleMouseUp}
-      className='bg-gray-100 h-full w-full rounded-xl select-none touch-none'
+      className='bg-white h-full w-full rounded-xl select-none'
     />
   );
 }
