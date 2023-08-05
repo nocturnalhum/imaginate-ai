@@ -47,7 +47,7 @@ export default function Home() {
             isFlipped ? 'rotate-y-180 ' : ''
           }`}
         >
-          <div className='absolute inset-0 p-4'>
+          <div className='absolute inset-0 p-4 select-none touch-none'>
             <Card1 />
           </div>
           <div className='absolute inset-0 h-full w-full rounded-xl rotate-y-180 backface-hidden p-4'>
