@@ -32,7 +32,7 @@ export default function Home() {
   return (
     <main
       className={
-        'flex flex-col items-center min-h-screen bg-desk overflow-hidden'
+        'min-h-screen flex flex-col items-center bg-desk text-gray-100 overflow-y-hidden'
       }
     >
       <ConfirmationModal
@@ -43,11 +43,11 @@ export default function Home() {
       <div className='h-[80vh] w-full max-w-5xl mx-auto group perspective'>
         <Header />
         <div
-          className={`relative h-full w-full glass-border duration-500 preserve-3d ${
+          className={`relative h-full w-full glass-border duration-500 preserve-3d touch-none ${
             isFlipped ? 'rotate-y-180 ' : ''
           }`}
         >
-          <div className='absolute inset-0 p-4 select-none touch-none'>
+          <div className='absolute inset-0 p-2'>
             <Card1 />
           </div>
           <div className='absolute inset-0 h-full w-full rounded-xl rotate-y-180 backface-hidden p-4'>
@@ -57,14 +57,14 @@ export default function Home() {
         <div className='relative w-full'>
           <div
             className={`absolute w-full top-0 duration-300 ${
-              showTools ? 'translate-y-[250%]' : 'translate-y-0'
+              !showTools ? 'translate-y-[250%]' : 'translate-y-0'
             } `}
           >
             <Tools />
           </div>
           <div
             className={`absolute w-full top-0 duration-300 ${
-              !showTools ? 'translate-y-[250%]' : 'translate-y-0'
+              showTools ? 'translate-y-[250%]' : 'translate-y-0'
             } `}
           >
             {/* <StableDiffusion
