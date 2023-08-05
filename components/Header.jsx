@@ -30,7 +30,7 @@ export default function Header() {
         </button>
       </div>
       <div className='flex justify-center items-center font-medium text-xl  flex-1 '>
-        <h1>Sketch AI</h1>
+        <h1>Sketch AI 2</h1>
       </div>
       <div className='flex justify-end items-center flex-1'>
         <button
