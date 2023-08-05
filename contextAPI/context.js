@@ -10,13 +10,13 @@ export default function AppStore({ children }) {
   const [message, setMessage] = useState(null);
   const [error, setError] = useState('Errors');
   const [color, setColor] = useState('#000');
-  const [radius, setRadius] = useState(5);
+  const [radius, setRadius] = useState(2);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [actions, setActions] = useState([]);
   const [currentPosition, setCurrentPosition] = useState(-1);
   const [showTools, setShowTools] = useState(true);
   const [elements, setElements] = useState([]);
-  const [shape, setShape] = useState('line');
+  const [tool, setTool] = useState('line');
 
   const canvasRef = useRef();
 
@@ -48,8 +48,8 @@ export default function AppStore({ children }) {
           setActions,
           currentPosition,
           setCurrentPosition,
-          shape,
-          setShape,
+          tool,
+          setTool,
           elements,
           setElements,
           showTools,

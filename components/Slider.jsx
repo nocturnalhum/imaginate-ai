@@ -10,7 +10,6 @@ const Slider = ({ currentValue, setCurrentValue, minVal, maxVal }) => {
       trackClassName='customSlider-track'
       thumbClassName='customSlider-thumb'
       markClassName='customSlider-mark'
-      // marks={20}
       min={minVal}
       max={maxVal}
     />

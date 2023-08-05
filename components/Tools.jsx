@@ -1,7 +1,11 @@
 import React, { useRef } from 'react';
 import { BsImages } from 'react-icons/bs';
-import { AiOutlineEdit, AiOutlineLine } from 'react-icons/ai';
-import { PiCircle, PiRectangle } from 'react-icons/pi';
+import { AiOutlineLine } from 'react-icons/ai';
+import {
+  PiCircle,
+  PiRectangle,
+  PiSelectionBackgroundDuotone,
+} from 'react-icons/pi';
 import Slider from './Slider';
 import PopoverPicker from './PopoverPicker';
 import { useCanvasContext } from '@/contextAPI/context';
@@ -17,8 +21,8 @@ export default function Tools() {
     setActions,
     currentPosition,
     setCurrentPosition,
-    shape,
-    setShape,
+    tool,
+    setTool,
   } = useCanvasContext();
   const inputRef = useRef();
 
@@ -89,32 +93,40 @@ export default function Tools() {
         </div>
         <div className='pl-3'>
           <button
-            onClick={() => setShape('rectangle')}
+            onClick={() => setTool('rectangle')}
             className={`bg-black p-3 rounded-l-md border-r  border-r-gray-400 ${
-              shape === 'rectangle' ? 'opacity-100' : 'opacity-50'
+              tool === 'rectangle' ? 'opacity-100' : 'opacity-50'
             }`}
           >
             <PiRectangle size={25} />
           </button>
           <button
-            onClick={() => setShape('circle')}
-            className={`bg-black p-3 rounded-l-md border-r  border-r-gray-400 ${
-              shape === 'circle' ? 'opacity-100' : 'opacity-50'
+            onClick={() => setTool('circle')}
+            className={`bg-black p-3  border-r  border-r-gray-400 ${
+              tool === 'circle' ? 'opacity-100' : 'opacity-50'
             }`}
           >
             <PiCircle size={25} />
           </button>
           <button
-            onClick={() => setShape('line')}
-            className={`bg-black p-3 rounded-r-md ${
-              shape === 'line' ? 'opacity-100' : 'opacity-50'
+            onClick={() => setTool('line')}
+            className={`bg-black p-3 ${
+              tool === 'line' ? 'opacity-100' : 'opacity-50'
             }`}
           >
             <AiOutlineLine size={25} />
           </button>
+          {/* <button
+            onClick={() => setTool('selection')}
+            className={`bg-black p-3 rounded-r-md ${
+              tool === 'selection' ? 'opacity-100' : 'opacity-50'
+            }`}
+          >
+            <PiSelectionBackgroundDuotone size={25} />
+          </button> */}
         </div>
         <div className='flex flex-col items-start h-full'>
-          <h2 className='mb-2'>Thickness: {radius}</h2>
+          <h2 className='mb-2'>Width: {radius}</h2>
           <Slider
             currentValue={radius}
             setCurrentValue={setRadius}
