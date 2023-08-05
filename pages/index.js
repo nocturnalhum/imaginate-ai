@@ -32,7 +32,7 @@ export default function Home() {
   return (
     <main
       className={
-        'flex flex-col items-center min-h-screen bg-desk overflow-hidden touch-none'
+        'flex flex-col items-center min-h-screen bg-desk overflow-hidden'
       }
     >
       <ConfirmationModal
