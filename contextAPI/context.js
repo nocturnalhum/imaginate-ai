@@ -14,7 +14,7 @@ export default function AppStore({ children }) {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [actions, setActions] = useState([]);
   const [currentPosition, setCurrentPosition] = useState(-1);
-
+  const [showTools, setShowTools] = useState(true);
   const [elements, setElements] = useState([]);
   const [shape, setShape] = useState('line');
 
@@ -52,6 +52,8 @@ export default function AppStore({ children }) {
           setShape,
           elements,
           setElements,
+          showTools,
+          setShowTools,
         }}
       >
         {children}

@@ -7,13 +7,14 @@ import Tools from '@/components/Tools';
 import ConfirmationModal from '@/components/ConfirmationModal';
 
 export default function Home() {
-  const [showTools, setShowTools] = useState(true);
-  const { canvasRef, isFlipped, isModalOpen, setIsModalOpen, setElements } =
-    useCanvasContext();
-
-  const handleTools = () => {
-    setShowTools(!showTools);
-  };
+  const {
+    canvasRef,
+    isFlipped,
+    isModalOpen,
+    setIsModalOpen,
+    setElements,
+    showTools,
+  } = useCanvasContext();
 
   const handleConfirmClear = () => {
     let canvas = canvasRef.current;
@@ -31,7 +32,7 @@ export default function Home() {
   return (
     <main
       className={
-        'flex flex-col items-center min-h-screen bg-desk overflow-y-hidden'
+        'flex flex-col items-center min-h-screen bg-desk overflow-hidden'
       }
     >
       <ConfirmationModal
@@ -39,7 +40,7 @@ export default function Home() {
         onConfirm={handleConfirmClear}
         onCancel={handleCancelClear}
       />
-      <div className='h-[80vh] w-full  max-w-5xl mx-auto group perspective'>
+      <div className='h-[80vh] w-full max-w-5xl mx-auto group perspective'>
         <Header />
         <div
           className={`relative h-full w-full glass-border duration-500 preserve-3d ${
@@ -56,17 +57,17 @@ export default function Home() {
         <div className='relative w-full'>
           <div
             className={`absolute w-full top-0 duration-300 ${
-              !showTools ? 'translate-y-[250%]' : 'translate-y-0'
+              showTools ? 'translate-y-[250%]' : 'translate-y-0'
             } `}
           >
             <Tools />
           </div>
-          {/* <div
+          <div
             className={`absolute w-full top-0 duration-300 ${
-              showTools ? 'translate-y-[250%]' : 'translate-y-0'
+              !showTools ? 'translate-y-[250%]' : 'translate-y-0'
             } `}
           >
-            <StableDiffusion
+            {/* <StableDiffusion
               canvasRef={canvasRef}
               setFlip={setFlip}
               message={message}
@@ -76,8 +77,8 @@ export default function Home() {
               setPrediction={setPrediction}
               error={error}
               setError={setError}
-            />
-          </div> */}
+            /> */}
+          </div>
         </div>
       </div>
     </main>
