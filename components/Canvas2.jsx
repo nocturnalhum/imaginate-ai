@@ -59,10 +59,11 @@ export default function Canvas({ elementRef }) {
   const handleTouchStart = (e) => {
     e.preventDefault(); // Prevent iOS magnifying glass from popping up while drawing
     const { touches } = e;
-    const { pageX, pageY } = touches[0];
-    const x = pageX - e.target.offsetLeft;
-    const y = pageY - e.target.offsetTop;
-    const element = createShape(x, y, pageX, pageY, shape);
+    const { clientX, clientY } = touches[0];
+    const rect = e.target.getBoundingClientRect();
+    const x = clientX - rect.left;
+    const y = clientY - rect.top;
+    const element = createShape(x, y, x, y, shape);
     setElements((prev) => [...prev, element]);
     setIsDrawing(true);
   };
@@ -70,9 +71,10 @@ export default function Canvas({ elementRef }) {
   const handleTouchMove = (e) => {
     if (!isDrawing) return;
     const { touches } = e;
-    const { pageX, pageY } = touches[0];
-    const x = pageX - e.target.offsetLeft;
-    const y = pageY - e.target.offsetTop;
+    const { clientX, clientY } = touches[0];
+    const rect = e.target.getBoundingClientRect();
+    const x = clientX - rect.left;
+    const y = clientY - rect.top;
     const index = elements.length - 1;
     const { x1, y1 } = elements[index];
     const updatedShape = createShape(x1, y1, x, y, shape);
@@ -132,7 +134,7 @@ export default function Canvas({ elementRef }) {
       onTouchStart={handleTouchStart}
       onTouchMove={handleTouchMove}
       onTouchEnd={handleMouseUp}
-      className='bg-gray-100 h-full w-full rounded-xl select-none'
+      className='bg-gray-100 h-full w-full rounded-xl select-none touch-none'
     />
   );
 }
