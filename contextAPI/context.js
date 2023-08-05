@@ -1,4 +1,4 @@
-import { createContext, useContext, useState } from 'react';
+import { createContext, useContext, useRef, useState } from 'react';
 
 const CanvasContext = createContext();
 const DiffusionContext = createContext();
@@ -15,6 +15,11 @@ export default function AppStore({ children }) {
   const [actions, setActions] = useState([]);
   const [currentPosition, setCurrentPosition] = useState(-1);
 
+  const [elements, setElements] = useState([]);
+  const [shape, setShape] = useState('line');
+
+  const canvasRef = useRef();
+
   return (
     <DiffusionContext.Provider
       value={{
@@ -30,6 +35,7 @@ export default function AppStore({ children }) {
     >
       <CanvasContext.Provider
         value={{
+          canvasRef,
           isFlipped,
           setIsFlipped,
           color,
@@ -42,6 +48,10 @@ export default function AppStore({ children }) {
           setActions,
           currentPosition,
           setCurrentPosition,
+          shape,
+          setShape,
+          elements,
+          setElements,
         }}
       >
         {children}
