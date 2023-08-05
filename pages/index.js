@@ -29,7 +29,11 @@ export default function Home() {
   };
 
   return (
-    <main className={'flex flex-col items-center min-h-screen bg-desk'}>
+    <main
+      className={
+        'flex flex-col items-center min-h-screen bg-desk overflow-y-hidden'
+      }
+    >
       <ConfirmationModal
         isOpen={isModalOpen}
         onConfirm={handleConfirmClear}
