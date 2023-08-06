@@ -36,8 +36,39 @@ export function createShape(id, x1, y1, x2, y2, type, radius, isShiftPressed) {
 // =============<<< GetElementAtPosition >>>=================================
 // ==========================================================================
 export function getElementAtPosition(x, y, elements) {
-  return elements.find((element) => isWithinElement(x, y, element));
+  let smallestAreaElement = null;
+  let smallestArea = Number.MAX_SAFE_INTEGER;
+
+  for (const element of elements) {
+    if (isWithinElement(x, y, element)) {
+      const area = calculateElementArea(element);
+      if (area < smallestArea) {
+        smallestArea = area;
+        smallestAreaElement = element;
+      }
+    }
+  }
+
+  return smallestAreaElement;
 }
+// ==========================================================================
+// =============<<< CalculateElementArea >>>=================================
+// ==========================================================================
+
+const calculateElementArea = (element) => {
+  const { type, x1, x2, y1, y2 } = element;
+  if (type === 'rectangle') {
+    const width = Math.abs(x2 - x1);
+    const height = Math.abs(y2 - y1);
+    return width * height;
+  } else if (type === 'line') {
+    return 0; // Lines have no area
+  } else if (type === 'ellipse') {
+    const rx = Math.abs(x2 - x1) / 2;
+    const ry = Math.abs(y2 - y1) / 2;
+    return Math.PI * rx * ry;
+  }
+};
 
 // ==========================================================================
 // =============<<< IsWithinElement >>>======================================

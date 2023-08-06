@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import rough from 'roughjs/bundled/rough.cjs.js';
 import { useCanvasContext } from '@/contextAPI/context';
 import restoreCanvasState from '@/utils/restoreCanvasState';
-import { createElement } from '@/utils/createShape';
+import { createElement } from '@/utils/elementUtilities';
 
 const generator = rough.generator();
 

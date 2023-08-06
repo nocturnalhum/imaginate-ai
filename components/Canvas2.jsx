@@ -5,7 +5,7 @@ import {
   createShape,
   getElementAtPosition,
   updateElement,
-} from '@/utils/createShape';
+} from '@/utils/elementUtilities';
 
 const generator = rough.generator();
 
@@ -16,7 +16,6 @@ export default function Canvas({ elementRef }) {
   const { canvasRef } = useCanvasContext();
   const contextRef = useRef();
   const isShiftPressed = useRef(false);
-  const touchRef = useRef(null);
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -24,7 +23,7 @@ export default function Canvas({ elementRef }) {
     canvas.height = canvas.clientHeight;
     const ctx = canvas.getContext('2d');
     contextRef.current = ctx;
-    //  RoughJS Canvas
+    //  Initialize RoughJS Canvas
     const roughCanvas = rough.canvas(canvas);
     elements.forEach(({ roughShape }) => roughCanvas.draw(roughShape));
 
