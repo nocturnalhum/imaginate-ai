@@ -16,6 +16,7 @@ export default function Canvas({ elementRef }) {
   const { canvasRef } = useCanvasContext();
   const contextRef = useRef();
   const isShiftPressed = useRef(false);
+  const touchRef = useRef(null);
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -168,9 +169,9 @@ export default function Canvas({ elementRef }) {
     }
   };
 
-  // ============================================================================
+  // =============================================================================
   // =============<<< Touch Events >>>===========================================
-  // ============================================================================
+  // =============================================================================
   const handleTouchStart = (e) => {
     e.preventDefault(); // Prevent iOS magnifying glass from popping up while drawing
     const { touches } = e;
@@ -178,24 +179,96 @@ export default function Canvas({ elementRef }) {
     const rect = e.target.getBoundingClientRect();
     const x = clientX - rect.left;
     const y = clientY - rect.top;
-    const element = createShape(x, y, x, y, tool, radius);
-    setElements((prev) => [...prev, element]);
-    setAction(true);
+
+    if (tool === 'selection') {
+      const element = getElementAtPosition(x, y, elements);
+      if (element) {
+        const offsetX = x - element.x1;
+        const offsetY = y - element.y1;
+        setSelectedElement({ ...element, offsetX, offsetY });
+        setAction('moving');
+      }
+    } else {
+      const id = elements.length;
+      const element = createShape(
+        id,
+        x,
+        y,
+        x,
+        y,
+        tool,
+        radius,
+        isShiftPressed.current
+      );
+      setElements((prev) => [...prev, element]);
+      setAction('draw');
+    }
   };
 
   const handleTouchMove = (e) => {
-    if (!action) return;
-    const { touches } = e;
-    const { clientX, clientY } = touches[0];
+    // Prevent default touch behavior to avoid conflicts
+    e.preventDefault();
+
+    const { clientX, clientY } = e.touches[0];
     const rect = e.target.getBoundingClientRect();
     const x = clientX - rect.left;
     const y = clientY - rect.top;
-    const index = elements.length - 1;
-    const { x1, y1 } = elements[index];
-    const updatedShape = createShape(x1, y1, x, y, tool, radius);
-    const elementsCopy = [...elements];
-    elementsCopy[index] = updatedShape;
-    setElements(elementsCopy);
+
+    // Set cursor to 'move' when hovering over movable element
+    if (tool === 'selection') {
+      const cursorStyle = getElementAtPosition(x, y, elements)
+        ? 'move'
+        : 'default';
+      e.target.style.cursor = cursorStyle;
+    }
+
+    if (action === 'draw') {
+      const index = elements.length - 1;
+      const { x1, y1 } = elements[index];
+
+      // When isShiftPressed, rectangles and ellipses will be restricted to 1:1 ratio
+      const id = elements.length;
+      const updatedShape = createShape(
+        id,
+        x1,
+        y1,
+        x,
+        y,
+        tool,
+        radius,
+        isShiftPressed.current
+      );
+      updateElement(
+        elements,
+        setElements,
+        index,
+        x1,
+        y1,
+        x,
+        y,
+        tool,
+        radius,
+        isShiftPressed.current
+      );
+    } else if (action === 'moving') {
+      const { id, x1, x2, y1, y2, type, offsetX, offsetY } = selectedElement;
+      const width = x2 - x1;
+      const height = y2 - y1;
+      const updateX = x - offsetX;
+      const updateY = y - offsetY;
+      updateElement(
+        elements,
+        setElements,
+        id,
+        updateX,
+        updateY,
+        updateX + width,
+        updateY + height,
+        type,
+        elements[id].roughShape.options.strokeWidth,
+        isShiftPressed.current
+      );
+    }
   };
 
   return (
