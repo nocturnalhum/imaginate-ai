@@ -101,9 +101,9 @@ export default function Tools() {
             <PiRectangle size={25} />
           </button>
           <button
-            onClick={() => setTool('circle')}
+            onClick={() => setTool('ellipse')}
             className={`bg-black p-3  border-r  border-r-gray-400 ${
-              tool === 'circle' ? 'opacity-100' : 'opacity-50'
+              tool === 'ellipse' ? 'opacity-100' : 'opacity-50'
             }`}
           >
             <PiCircle size={25} />
@@ -116,14 +116,14 @@ export default function Tools() {
           >
             <AiOutlineLine size={25} />
           </button>
-          {/* <button
+          <button
             onClick={() => setTool('selection')}
-            className={`bg-black p-3 rounded-r-md ${
+            className={`bg-black p-3 rounded-r-md border-l border-l-gray-400 ${
               tool === 'selection' ? 'opacity-100' : 'opacity-50'
             }`}
           >
             <PiSelectionBackgroundDuotone size={25} />
-          </button> */}
+          </button>
         </div>
         <div className='flex flex-col items-start h-full'>
           <h2 className='mb-2'>Width: {radius}</h2>
