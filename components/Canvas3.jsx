@@ -210,7 +210,11 @@ export default function Canvas({ elementRef }) {
         const offsetX = x - element.x1;
         const offsetY = y - element.y1;
         setSelectedElement({ ...element, offsetX, offsetY });
-        setAction('moving');
+        if (element.position === 'inside') {
+          setAction('moving');
+        } else {
+          setAction('resizing');
+        }
       }
     } else {
       const id = elements.length;
@@ -225,6 +229,7 @@ export default function Canvas({ elementRef }) {
         isShiftPressed.current
       );
       setElements((prev) => [...prev, element]);
+      setSelectedElement(element);
       setAction('draw');
     }
   };
@@ -240,10 +245,10 @@ export default function Canvas({ elementRef }) {
 
     // Set cursor to 'move' when hovering over movable element
     if (tool === 'selection') {
-      const cursorStyle = getElementAtPosition(x, y, elements)
-        ? 'move'
+      const element = getElementAtPosition(x, y, elements);
+      e.target.style.cursor = element
+        ? cursorForPosition(element.position)
         : 'default';
-      e.target.style.cursor = cursorStyle;
     }
 
     if (action === 'draw') {
@@ -251,17 +256,6 @@ export default function Canvas({ elementRef }) {
       const { x1, y1 } = elements[index];
 
       // When isShiftPressed, rectangles and ellipses will be restricted to 1:1 ratio
-      const id = elements.length;
-      const updatedShape = createShape(
-        id,
-        x1,
-        y1,
-        x,
-        y,
-        tool,
-        radius,
-        isShiftPressed.current
-      );
       updateElement(
         elements,
         setElements,
@@ -288,6 +282,22 @@ export default function Canvas({ elementRef }) {
         updateY,
         updateX + width,
         updateY + height,
+        type,
+        elements[id].roughShape.options.strokeWidth,
+        isShiftPressed.current
+      );
+    } else if (action === 'resizing') {
+      console.log('Resizing', selectedElement);
+      const { id, type, position, ...coordinates } = selectedElement;
+      const { x1, y1, x2, y2 } = resizedCoords(x, y, position, coordinates);
+      updateElement(
+        elements,
+        setElements,
+        id,
+        x1,
+        y1,
+        x2,
+        y2,
         type,
         elements[id].roughShape.options.strokeWidth,
         isShiftPressed.current
