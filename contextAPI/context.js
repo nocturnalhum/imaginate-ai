@@ -16,7 +16,7 @@ export default function AppStore({ children }) {
   const [currentPosition, setCurrentPosition] = useState(-1);
   const [showTools, setShowTools] = useState(true);
   const [elements, setElements] = useState([]);
-  const [tool, setTool] = useState('line');
+  const [tool, setTool] = useState('rectangle');
 
   const canvasRef = useRef();
 
