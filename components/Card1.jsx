@@ -1,5 +1,5 @@
 import React, { useRef } from 'react';
-import Canvas from './Canvas3';
+import Canvas from './Canvas4';
 
 export default function Card1() {
   const elementRef = useRef();

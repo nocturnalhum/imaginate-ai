@@ -1,3 +1,4 @@
+import { useHistory } from '@/hooks/useHistory';
 import { createContext, useContext, useRef, useState } from 'react';
 
 const CanvasContext = createContext();
@@ -15,7 +16,7 @@ export default function AppStore({ children }) {
   const [actions, setActions] = useState([]);
   const [currentPosition, setCurrentPosition] = useState(-1);
   const [showTools, setShowTools] = useState(true);
-  const [elements, setElements] = useState([]);
+  const [elements, setElements, undo, redo] = useHistory([]);
   const [tool, setTool] = useState('rectangle');
 
   const canvasRef = useRef();
@@ -54,6 +55,8 @@ export default function AppStore({ children }) {
           setElements,
           showTools,
           setShowTools,
+          undo,
+          redo,
         }}
       >
         {children}

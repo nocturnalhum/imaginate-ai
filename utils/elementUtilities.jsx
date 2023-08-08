@@ -225,5 +225,5 @@ export const updateElement = (
   );
   const elementsCopy = [...elements];
   elementsCopy[id] = updateElement;
-  setElements(elementsCopy);
+  setElements(elementsCopy, true);
 };

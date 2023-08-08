@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { BsImages } from 'react-icons/bs';
 import { AiOutlineLine } from 'react-icons/ai';
 import {
@@ -23,8 +23,27 @@ export default function Tools() {
     setCurrentPosition,
     tool,
     setTool,
+    undo,
+    redo,
   } = useCanvasContext();
   const inputRef = useRef();
+
+  useEffect(() => {
+    const undoRedoFunction = (event) => {
+      if ((event.metaKey || event.ctrlKey) && event.key === 'z') {
+        if (event.shiftKey) {
+          redo();
+        } else {
+          undo();
+        }
+      }
+    };
+
+    document.addEventListener('keydown', undoRedoFunction);
+    return () => {
+      document.removeEventListener('keydown', undoRedoFunction);
+    };
+  }, [undo, redo]);
 
   const savePNG = (e) => {
     let link = e.currentTarget;
@@ -156,8 +175,12 @@ export default function Tools() {
             className='hidden'
           />
         </form>
-        <button className='bg-black p-3 rounded-full'>Undo</button>
-        <button className='bg-black p-3 rounded-full'>Redo</button>
+        <button onClick={undo} className='bg-black p-3 rounded-full'>
+          Undo
+        </button>
+        <button onClick={redo} className='bg-black p-3 rounded-full'>
+          Redo
+        </button>
         <button onClick={clearCanvas} className='bg-black p-3 rounded-full'>
           Clear
         </button>
