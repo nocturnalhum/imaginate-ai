@@ -171,8 +171,17 @@ const positionWithinElement = (x, y, element) => {
       const betweenAnyPoint = element.points.some((point, index) => {
         const nextPoint = element.points[index + 1];
         if (!nextPoint) return false;
+        console.log('ELEMENT Online Radius:', element);
         return (
-          onLine(point.x, point.y, nextPoint.x, nextPoint.y, x, y, 10) != null
+          onLine(
+            point.x,
+            point.y,
+            nextPoint.x,
+            nextPoint.y,
+            x,
+            y,
+            element.radius
+          ) != null
         );
       });
       return betweenAnyPoint ? 'inside' : null;

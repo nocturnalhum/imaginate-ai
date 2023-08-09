@@ -108,7 +108,7 @@ export default function Tools() {
   return (
     <div className='w-full h-20 my-2 text-gray-100 bg-gray-400/50 rounded-full'>
       <div className='flex justify-between items-center w-full h-full p-3 '>
-        <div className='flex flex-col items-center  justify-center mr-3 p-3 rounded-xl drop-shadow-md shadow-lg'>
+        <div className='flex flex-col items-center justify-center mr-3 p-3 rounded-xl drop-shadow-md shadow-lg select-none'>
           <h1 className='font-medium text-sm text-gray-100'>Color</h1>
           <PopoverPicker color={color} onChange={setColor} />
         </div>
@@ -162,7 +162,7 @@ export default function Tools() {
             <PiTrash size={25} />
           </button>
         </div>
-        <div className='flex flex-col items-start h-full'>
+        <div className='flex flex-col items-start h-full select-none'>
           <h2 className='mb-2'>Width: {radius}</h2>
           <Slider
             currentValue={radius}

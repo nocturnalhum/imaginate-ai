@@ -10,7 +10,7 @@
   @apply bg-[rgb(104,117,217)];
 }
 .customSlider-thumb {
-  @apply w-5 h-5 rounded-full outline-none cursor-pointer bg-[rgb(104,117,217)] hover:shadow-thumb;
+  @apply w-7 h-7 -top-1 rounded-full outline-none cursor-pointer bg-[rgb(104,117,217)] hover:shadow-thumb;
 }
 .customSlider-mark {
   @apply cursor-pointer top-1.5 w-[1.5px] h-2 bg-black;
