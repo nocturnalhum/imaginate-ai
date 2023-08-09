@@ -5,6 +5,8 @@ import {
   PiCircle,
   PiRectangle,
   PiSelectionBackgroundDuotone,
+  PiPaintBrush,
+  PiTrash,
 } from 'react-icons/pi';
 import Slider from './Slider';
 import PopoverPicker from './PopoverPicker';
@@ -107,9 +109,17 @@ export default function Tools() {
     <div className='w-full h-20 my-2 text-gray-100 bg-gray-400/50 rounded-full'>
       <div className='flex justify-between items-center w-full h-full p-3 '>
         <div className='flex flex-col items-center  justify-center mr-3 p-3 rounded-xl drop-shadow-md shadow-lg'>
-          <h1 className='font-medium text-gray-100'>Brush Color</h1>
+          <h1 className='font-medium text-sm text-gray-100'>Color</h1>
           <PopoverPicker color={color} onChange={setColor} />
         </div>
+        <button
+          onClick={() => setTool('pen')}
+          className={`bg-black p-3 rounded-md  border-r-gray-400 ${
+            tool === 'pen' ? 'opacity-100' : 'opacity-50'
+          }`}
+        >
+          <PiPaintBrush size={25} />
+        </button>
         <div className='pl-3'>
           <button
             onClick={() => setTool('rectangle')}
@@ -137,11 +147,19 @@ export default function Tools() {
           </button>
           <button
             onClick={() => setTool('selection')}
-            className={`bg-black p-3 rounded-r-md border-l border-l-gray-400 ${
+            className={`bg-black p-3 border-l border-l-gray-400 ${
               tool === 'selection' ? 'opacity-100' : 'opacity-50'
             }`}
           >
             <PiSelectionBackgroundDuotone size={25} />
+          </button>
+          <button
+            onClick={() => setTool('delete')}
+            className={`bg-black p-3 rounded-r-md border-l border-l-gray-400 ${
+              tool === 'delete' ? 'opacity-100' : 'opacity-50'
+            }`}
+          >
+            <PiTrash size={25} />
           </button>
         </div>
         <div className='flex flex-col items-start h-full'>
