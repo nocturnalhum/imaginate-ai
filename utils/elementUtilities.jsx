@@ -172,7 +172,7 @@ const positionWithinElement = (x, y, element) => {
         const nextPoint = element.points[index + 1];
         if (!nextPoint) return false;
         return (
-          onLine(point.x, point.y, nextPoint.x, nextPoint.y, x, y, 5) != null
+          onLine(point.x, point.y, nextPoint.x, nextPoint.y, x, y, 10) != null
         );
       });
       return betweenAnyPoint ? 'inside' : null;
