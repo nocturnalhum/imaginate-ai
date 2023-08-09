@@ -330,8 +330,7 @@ export default function Canvas({ elementRef }) {
           updateX + width,
           updateY + height,
           type,
-          radius,
-          // elements[id].roughShape.options.strokeWidth,
+          elements[id].roughShape.options.strokeWidth,
           isShiftPressed.current
         );
       }
@@ -348,8 +347,7 @@ export default function Canvas({ elementRef }) {
         x2,
         y2,
         type,
-        radius,
-        // elements[id].roughShape.options.strokeWidth,
+        elements[id].roughShape.options.strokeWidth,
         isShiftPressed.current
       );
     }
@@ -361,7 +359,6 @@ export default function Canvas({ elementRef }) {
       onMouseDown={handleMouseDown}
       onMouseMove={handleMouseMove}
       onMouseUp={handleMouseUp}
-      // onMouseOut={handleMouseUp}
       onTouchStart={handleTouchStart}
       onTouchMove={handleTouchMove}
       onTouchEnd={handleMouseUp}
