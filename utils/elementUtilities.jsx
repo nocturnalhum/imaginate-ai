@@ -251,8 +251,6 @@ export const adjustElementCoord = (element) => {
 // =============<<< ResizedCoords >>>========================================
 // ==========================================================================
 export const resizedCoords = (x, y, position, coordinates) => {
-  console.log('coordinates', coordinates);
-
   const { x1, y1, x2, y2 } = coordinates;
   switch (position) {
     case 'tl':

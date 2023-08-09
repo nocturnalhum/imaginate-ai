@@ -71,6 +71,7 @@ export default function Canvas({ elementRef }) {
       const element = getElementAtPosition(x, y, elements);
       if (element) {
         if (element.type === 'pen') {
+          console.log('Set Offsets');
           const xOffsets = element.points.map((point) => x - point.x);
           const yOffsets = element.points.map((point) => y - point.y);
           setSelectedElement({ ...element, xOffsets, yOffsets });
@@ -137,6 +138,7 @@ export default function Canvas({ elementRef }) {
       );
     } else if (action === 'moving') {
       if (selectedElement.type === 'pen') {
+        console.log('PEN Mouse', selectedElement);
         const newPoints = selectedElement.points.map((_, index) => ({
           x: x - selectedElement.xOffsets[index],
           y: y - selectedElement.yOffsets[index],
@@ -190,7 +192,6 @@ export default function Canvas({ elementRef }) {
   const handleMouseUp = () => {
     if (!selectedElement) return;
     const index = selectedElement.id;
-    console.log('Elements-index', elements[index]);
 
     const { id, type, roughShape } = elements[index];
     if (
@@ -213,10 +214,11 @@ export default function Canvas({ elementRef }) {
     }
     setAction('none');
     setSelectedElement(null);
+    console.log('Elements-index', elements[index]);
   };
 
   // =============================================================================
-  // =============<<< Touch Events >>>===========================================
+  // =============<<< Touch Start >>>=============================================
   // =============================================================================
   const handleTouchStart = (e) => {
     e.preventDefault(); // Prevent iOS magnifying glass from popping up while drawing
@@ -229,9 +231,16 @@ export default function Canvas({ elementRef }) {
     if (tool === 'selection') {
       const element = getElementAtPosition(x, y, elements);
       if (element) {
-        const offsetX = x - element.x1;
-        const offsetY = y - element.y1;
-        setSelectedElement({ ...element, offsetX, offsetY });
+        if (element.type === 'pen') {
+          const xOffsets = element.points.map((point) => x - point.x);
+          const yOffsets = element.points.map((point) => y - point.y);
+          console.log('Offsets', xOffsets, yOffsets);
+          setSelectedElement({ ...element, xOffsets, yOffsets });
+        } else {
+          const offsetX = x - element.x1;
+          const offsetY = y - element.y1;
+          setSelectedElement({ ...element, offsetX, offsetY });
+        }
         setElements((prev) => prev);
         if (element.position === 'inside') {
           setAction('moving');
@@ -253,12 +262,14 @@ export default function Canvas({ elementRef }) {
       );
       setElements((prev) => [...prev, element]);
       setSelectedElement(element);
-      setAction('draw');
+      setAction(tool === 'text' ? 'writing' : 'draw');
     }
   };
 
+  // =============================================================================
+  // =============<<< Touch Move >>>==============================================
+  // =============================================================================
   const handleTouchMove = (e) => {
-    // Prevent default touch behavior to avoid conflicts
     e.preventDefault();
 
     const { clientX, clientY } = e.touches[0];
@@ -292,23 +303,38 @@ export default function Canvas({ elementRef }) {
         isShiftPressed.current
       );
     } else if (action === 'moving') {
-      const { id, x1, x2, y1, y2, type, offsetX, offsetY } = selectedElement;
-      const width = x2 - x1;
-      const height = y2 - y1;
-      const updateX = x - offsetX;
-      const updateY = y - offsetY;
-      updateElement(
-        elements,
-        setElements,
-        id,
-        updateX,
-        updateY,
-        updateX + width,
-        updateY + height,
-        type,
-        elements[id].roughShape.options.strokeWidth,
-        isShiftPressed.current
-      );
+      if (selectedElement.type === 'pen') {
+        console.log('PEN Touch', selectedElement);
+        const newPoints = selectedElement.points.map((_, index) => ({
+          x: x - selectedElement?.xOffsets[index],
+          y: y - selectedElement?.yOffsets[index],
+        }));
+        const elementsCopy = [...elements];
+        elementsCopy[selectedElement.id] = {
+          ...elementsCopy[selectedElement.id],
+          points: newPoints,
+        };
+        setElements(elementsCopy, true);
+      } else {
+        const { id, x1, x2, y1, y2, type, offsetX, offsetY } = selectedElement;
+        const width = x2 - x1;
+        const height = y2 - y1;
+        const updateX = x - offsetX;
+        const updateY = y - offsetY;
+        updateElement(
+          elements,
+          setElements,
+          id,
+          updateX,
+          updateY,
+          updateX + width,
+          updateY + height,
+          type,
+          radius,
+          // elements[id].roughShape.options.strokeWidth,
+          isShiftPressed.current
+        );
+      }
     } else if (action === 'resizing') {
       console.log('Resizing', selectedElement);
       const { id, type, position, ...coordinates } = selectedElement;
@@ -322,7 +348,8 @@ export default function Canvas({ elementRef }) {
         x2,
         y2,
         type,
-        elements[id].roughShape.options.strokeWidth,
+        radius,
+        // elements[id].roughShape.options.strokeWidth,
         isShiftPressed.current
       );
     }
