@@ -17,7 +17,15 @@ const generator = rough.generator();
 export default function Canvas({ elementRef }) {
   const [action, setAction] = useState(false);
   const [selectedElement, setSelectedElement] = useState(null);
-  const { tool, elements, setElements, radius } = useCanvasContext();
+  const {
+    tool,
+    elements,
+    setElements,
+    radius,
+    setActions,
+    currentPosition,
+    setCurrentPosition,
+  } = useCanvasContext();
   const { canvasRef } = useCanvasContext();
   const isShiftPressed = useRef(false);
 
@@ -64,6 +72,29 @@ export default function Canvas({ elementRef }) {
   // =============<<< MouseDown >>>============================================
   // ==========================================================================
   const handleMouseDown = (e) => {
+    if (tool === 'delete') {
+      const { offsetX: x, offsetY: y } = e.nativeEvent;
+      const elementToDelete = getElementAtPosition(x, y, elements);
+      if (elementToDelete) {
+        const elementsCopy = [...elements];
+        const updatedElements = elementsCopy
+          .filter((element) => element.id !== elementToDelete.id)
+          .map((element, index) => {
+            return { ...element, id: index };
+          });
+        setElements(updatedElements);
+        // setActions((prevActions) => {
+        //   const newActions = prevActions.slice(0, currentPosition + 1);
+        //   return [
+        //     ...newActions,
+        //     elements.filter((element) => element.id !== elementToDelete.id),
+        //   ];
+        // });
+        // setCurrentPosition((prevPosition) => prevPosition + 1);
+      }
+      return;
+    }
+
     if (action === 'writing') return;
 
     const { offsetX: x, offsetY: y } = e.nativeEvent;
@@ -222,6 +253,23 @@ export default function Canvas({ elementRef }) {
   // =============================================================================
   const handleTouchStart = (e) => {
     e.preventDefault(); // Prevent iOS magnifying glass from popping up while drawing
+    if (tool === 'delete') {
+      const { offsetX: x, offsetY: y } = e.nativeEvent;
+      const elementToDelete = getElementAtPosition(x, y, elements);
+      if (elementToDelete) {
+        const elementsCopy = [...elements];
+        const updatedElements = elementsCopy
+          .filter((element) => element.id !== elementToDelete.id)
+          .map((element, index) => {
+            return { ...element, id: index };
+          });
+        setElements(updatedElements);
+      }
+      return;
+    }
+
+    if (action === 'writing') return;
+
     const { touches } = e;
     const { clientX, clientY } = touches[0];
     const rect = e.target.getBoundingClientRect();
