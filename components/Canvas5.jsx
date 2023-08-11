@@ -243,7 +243,7 @@ export default function Canvas({ elementRef }) {
   // =============<<< Touch Start >>>=============================================
   // =============================================================================
   const handleTouchStart = (e) => {
-    e.preventDefault(); // Prevent iOS magnifying glass from popping up while drawing
+    e.preventDefault();
     if (tool === 'delete') {
       const { offsetX: x, offsetY: y } = e.nativeEvent;
       const elementToDelete = getElementAtPosition(x, y, elements);
@@ -408,7 +408,7 @@ export default function Canvas({ elementRef }) {
       onTouchMove={handleTouchMove}
       onTouchEnd={handleMouseUp}
       className='bg-white h-full w-full rounded-xl select-none touch-none cursor-crosshair'
-      style={{ userDrag: 'none' }} // Prevent magnifying glass with pencil device double touches canvas
+      style={{ '-webkit-user-select': none }} // Prevent magnifying glass with pencil device double touches canvas
     />
   );
 }
