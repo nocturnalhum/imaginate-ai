@@ -408,7 +408,7 @@ export default function Canvas({ elementRef }) {
       onTouchMove={handleTouchMove}
       onTouchEnd={handleMouseUp}
       className='bg-white h-full w-full rounded-xl select-none touch-none cursor-crosshair'
-      style={{ '-webkit-user-select': none }} // Prevent magnifying glass with pencil device double touches canvas
+      style={{ userDrag: 'none', WebkitUserSelect: 'none' }} // Prevent magnifying glass with pencil device double touches canvas
     />
   );
 }
