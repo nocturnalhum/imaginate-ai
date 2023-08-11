@@ -3,7 +3,7 @@ import rough from 'roughjs/bundled/rough.cjs.js';
 
 const generator = rough.generator();
 
-export const adjustmentReqiured = (type) =>
+export const adjustmentRequired = (type) =>
   ['line', 'rectangle', 'ellipse'].includes(type);
 
 // ==========================================================================

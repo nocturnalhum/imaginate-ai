@@ -3,7 +3,7 @@ import rough from 'roughjs/bundled/rough.cjs.js';
 import { useCanvasContext } from '@/contextAPI/context';
 import {
   adjustElementCoord,
-  adjustmentReqiured,
+  adjustmentRequired,
   createShape,
   cursorForPosition,
   drawElement,
@@ -12,13 +12,11 @@ import {
   updateElement,
 } from '@/utils/elementUtilities';
 
-const generator = rough.generator();
-
 export default function Canvas({ elementRef }) {
   const [action, setAction] = useState(false);
   const [selectedElement, setSelectedElement] = useState(null);
-  const { tool, elements, setElements, color, radius } = useCanvasContext();
-  const { canvasRef } = useCanvasContext();
+  const { tool, elements, setElements, color, radius, canvasRef } =
+    useCanvasContext();
   const isShiftPressed = useRef(false);
 
   useEffect(() => {
@@ -218,7 +216,7 @@ export default function Canvas({ elementRef }) {
     const { id, type, roughShape } = elements[index];
     if (
       (action === 'draw' || action === 'resizing') &&
-      adjustmentReqiured(type)
+      adjustmentRequired(type)
     ) {
       const { x1, y1, x2, y2 } = adjustElementCoord(elements[index]);
       console.log('Mouse Up', roughShape);
@@ -298,6 +296,7 @@ export default function Canvas({ elementRef }) {
         x,
         y,
         tool,
+        color,
         radius,
         isShiftPressed.current
       );
@@ -392,6 +391,7 @@ export default function Canvas({ elementRef }) {
         x2,
         y2,
         type,
+        roughShape.options.stroke,
         roughShape.options.strokeWidth,
         isShiftPressed.current
       );
