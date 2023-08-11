@@ -1,12 +1,15 @@
 import React, { useEffect, useRef } from 'react';
 import { BsImages } from 'react-icons/bs';
+import { TfiSave } from 'react-icons/tfi';
 import { AiOutlineLine } from 'react-icons/ai';
+import { LuUndo2, LuRedo2 } from 'react-icons/lu';
 import {
   PiCircle,
   PiRectangle,
   PiSelectionBackgroundDuotone,
   PiPaintBrush,
   PiTrash,
+  PiEraserFill,
 } from 'react-icons/pi';
 import Slider from './Slider';
 import PopoverPicker from './PopoverPicker';
@@ -114,7 +117,7 @@ export default function Tools() {
         </div>
         <button
           onClick={() => setTool('pen')}
-          className={`bg-black p-3 rounded-md  border-r-gray-400 ${
+          className={`bg-black p-3 rounded-md border-r-gray-400 hover:opacity-80 ${
             tool === 'pen' ? 'opacity-100' : 'opacity-50'
           }`}
         >
@@ -123,7 +126,7 @@ export default function Tools() {
         <div className='pl-3'>
           <button
             onClick={() => setTool('rectangle')}
-            className={`bg-black p-3 rounded-l-md border-r  border-r-gray-400 ${
+            className={`bg-black p-3 rounded-l-md border-r border-r-gray-400 hover:opacity-80 ${
               tool === 'rectangle' ? 'opacity-100' : 'opacity-50'
             }`}
           >
@@ -131,7 +134,7 @@ export default function Tools() {
           </button>
           <button
             onClick={() => setTool('ellipse')}
-            className={`bg-black p-3  border-r  border-r-gray-400 ${
+            className={`bg-black p-3  border-r border-r-gray-400 hover:opacity-80 ${
               tool === 'ellipse' ? 'opacity-100' : 'opacity-50'
             }`}
           >
@@ -139,7 +142,7 @@ export default function Tools() {
           </button>
           <button
             onClick={() => setTool('line')}
-            className={`bg-black p-3 ${
+            className={`bg-black p-3 hover:opacity-80 ${
               tool === 'line' ? 'opacity-100' : 'opacity-50'
             }`}
           >
@@ -147,7 +150,7 @@ export default function Tools() {
           </button>
           <button
             onClick={() => setTool('selection')}
-            className={`bg-black p-3 border-l border-l-gray-400 ${
+            className={`bg-black p-3 border-l border-l-gray-400 hover:opacity-80 ${
               tool === 'selection' ? 'opacity-100' : 'opacity-50'
             }`}
           >
@@ -155,11 +158,11 @@ export default function Tools() {
           </button>
           <button
             onClick={() => setTool('delete')}
-            className={`bg-black p-3 rounded-r-md border-l border-l-gray-400 ${
+            className={`bg-black p-3 rounded-r-md border-l border-l-gray-400 hover:opacity-80 ${
               tool === 'delete' ? 'opacity-100' : 'opacity-50'
             }`}
           >
-            <PiTrash size={25} />
+            <PiEraserFill size={25} />
           </button>
         </div>
         <div className='flex flex-col items-start h-full select-none'>
@@ -171,18 +174,18 @@ export default function Tools() {
             maxVal={100}
           />
         </div>
-        <div className='bg-black p-3 rounded-full'>
+        <div className='bg-black p-3 rounded-full hover:opacity-70'>
           <a
             onClick={savePNG}
             href='download_link'
-            className='rounded-xl px-2 py-3.5 select-none'
+            className='rounded-full select-none'
           >
-            Save
+            <TfiSave size={25} />
           </a>
         </div>
         <form
           onClick={handleClick}
-          className='flex items-center justify-center h-12 w-12 rounded-full bg-sky-500 text-white select-none cursor-pointer'
+          className='flex items-center justify-center h-12 w-12 rounded-full bg-black text-white select-none cursor-pointer hover:opacity-70'
         >
           <BsImages size={25} />
           <input
@@ -193,14 +196,23 @@ export default function Tools() {
             className='hidden'
           />
         </form>
-        <button onClick={undo} className='bg-black p-3 rounded-full'>
-          Undo
+        <button
+          onClick={undo}
+          className='bg-black p-3 rounded-full hover:opacity-70'
+        >
+          <LuUndo2 size={25} />
         </button>
-        <button onClick={redo} className='bg-black p-3 rounded-full'>
-          Redo
+        <button
+          onClick={redo}
+          className='bg-black p-3 rounded-full hover:opacity-70'
+        >
+          <LuRedo2 size={25} />
         </button>
-        <button onClick={clearCanvas} className='bg-black p-3 rounded-full'>
-          Clear
+        <button
+          onClick={clearCanvas}
+          className='bg-black p-3 rounded-full hover:opacity-70'
+        >
+          <PiTrash size={25} />
         </button>
       </div>
     </div>

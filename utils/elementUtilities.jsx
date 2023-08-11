@@ -9,10 +9,21 @@ export const adjustmentReqiured = (type) =>
 // ==========================================================================
 // =============<<< CreateShape >>>==========================================
 // ==========================================================================
-export function createShape(id, x1, y1, x2, y2, type, radius, isShiftPressed) {
+export function createShape(
+  id,
+  x1,
+  y1,
+  x2,
+  y2,
+  type,
+  color,
+  radius,
+  isShiftPressed
+) {
   let x2Adjusted = x2;
   let y2Adjusted = y2;
 
+  console.log('CreateShape colour', color);
   if (isShiftPressed) {
     // Adjust x2 and y2 to ensure it draws a square or circle
     const width = x2 - x1;
@@ -29,10 +40,12 @@ export function createShape(id, x1, y1, x2, y2, type, radius, isShiftPressed) {
       const roughShape =
         type === 'line'
           ? generator.line(x1, y1, x2Adjusted, y2Adjusted, {
+              stroke: color,
               strokeWidth: radius,
             })
           : type === 'rectangle'
           ? generator.rectangle(x1, y1, x2Adjusted - x1, y2Adjusted - y1, {
+              stroke: color,
               strokeWidth: radius,
             })
           : generator.ellipse(
@@ -41,12 +54,13 @@ export function createShape(id, x1, y1, x2, y2, type, radius, isShiftPressed) {
               (x2Adjusted - x1) * 3,
               (y2Adjusted - y1) * 3,
               {
+                stroke: color,
                 strokeWidth: radius,
               }
             );
       return { id, x1, y1, x2: x2Adjusted, y2: y2Adjusted, type, roughShape };
     case 'pen':
-      return { id, type, points: [{ x: x1, y: y1 }], radius };
+      return { id, type, points: [{ x: x1, y: y1 }], color, radius };
     default:
       throw new Error(`Tool not recognised: ${type}`);
   }
@@ -65,9 +79,10 @@ export function drawElement(roughCanvas, context, element) {
     case 'pen':
       const stroke = getSvgPathFromStroke(
         getStroke(element.points, {
-          size: element.radius,
+          size: element.radius * 2,
         })
       );
+      context.fillStyle = element.color;
       context.fill(new Path2D(stroke));
       break;
     default:
@@ -290,6 +305,7 @@ export const updateElement = (
   x2,
   y2,
   type,
+  color,
   radius,
   isShiftPressed
 ) => {
@@ -305,6 +321,7 @@ export const updateElement = (
         x2,
         y2,
         type,
+        color,
         radius,
         isShiftPressed
       );

@@ -17,15 +17,7 @@ const generator = rough.generator();
 export default function Canvas({ elementRef }) {
   const [action, setAction] = useState(false);
   const [selectedElement, setSelectedElement] = useState(null);
-  const {
-    tool,
-    elements,
-    setElements,
-    radius,
-    setActions,
-    currentPosition,
-    setCurrentPosition,
-  } = useCanvasContext();
+  const { tool, elements, setElements, color, radius } = useCanvasContext();
   const { canvasRef } = useCanvasContext();
   const isShiftPressed = useRef(false);
 
@@ -34,6 +26,8 @@ export default function Canvas({ elementRef }) {
     canvas.width = canvas.clientWidth;
     canvas.height = canvas.clientHeight;
     const ctx = canvas.getContext('2d');
+    ctx.fillStyle = '#FFF'; // Set the background color to white
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
     //  Initialize RoughJS Canvas
     const roughCanvas = rough.canvas(canvas);
     elements.forEach((element) => drawElement(roughCanvas, ctx, element));
@@ -83,14 +77,6 @@ export default function Canvas({ elementRef }) {
             return { ...element, id: index };
           });
         setElements(updatedElements);
-        // setActions((prevActions) => {
-        //   const newActions = prevActions.slice(0, currentPosition + 1);
-        //   return [
-        //     ...newActions,
-        //     elements.filter((element) => element.id !== elementToDelete.id),
-        //   ];
-        // });
-        // setCurrentPosition((prevPosition) => prevPosition + 1);
       }
       return;
     }
@@ -128,6 +114,7 @@ export default function Canvas({ elementRef }) {
         x,
         y,
         tool,
+        color,
         radius,
         isShiftPressed.current
       );
@@ -164,12 +151,12 @@ export default function Canvas({ elementRef }) {
         x,
         y,
         tool,
+        color,
         radius,
         isShiftPressed.current
       );
     } else if (action === 'moving') {
       if (selectedElement.type === 'pen') {
-        console.log('PEN Mouse', selectedElement);
         const newPoints = selectedElement.points.map((_, index) => ({
           x: x - selectedElement.xOffsets[index],
           y: y - selectedElement.yOffsets[index],
@@ -181,7 +168,8 @@ export default function Canvas({ elementRef }) {
         };
         setElements(elementsCopy, true);
       } else {
-        const { id, x1, x2, y1, y2, type, offsetX, offsetY } = selectedElement;
+        const { id, x1, x2, y1, y2, type, offsetX, offsetY, roughShape } =
+          selectedElement;
         const width = x2 - x1;
         const height = y2 - y1;
         const updateX = x - offsetX;
@@ -195,12 +183,14 @@ export default function Canvas({ elementRef }) {
           updateX + width,
           updateY + height,
           type,
-          elements[id].roughShape.options.strokeWidth,
+          roughShape.options.stroke,
+          roughShape.options.strokeWidth,
           isShiftPressed.current
         );
       }
     } else if (action === 'resizing') {
-      const { id, type, position, ...coordinates } = selectedElement;
+      const { id, type, position, roughShape, ...coordinates } =
+        selectedElement;
       const { x1, y1, x2, y2 } = resizedCoords(x, y, position, coordinates);
       updateElement(
         elements,
@@ -211,7 +201,8 @@ export default function Canvas({ elementRef }) {
         x2,
         y2,
         type,
-        elements[id].roughShape.options.strokeWidth,
+        roughShape.options.stroke,
+        roughShape.options.strokeWidth,
         isShiftPressed.current
       );
     }
@@ -230,6 +221,7 @@ export default function Canvas({ elementRef }) {
       adjustmentReqiured(type)
     ) {
       const { x1, y1, x2, y2 } = adjustElementCoord(elements[index]);
+      console.log('Mouse Up', roughShape);
       updateElement(
         elements,
         setElements,
@@ -239,6 +231,7 @@ export default function Canvas({ elementRef }) {
         x2,
         y2,
         type,
+        roughShape.options.stroke,
         roughShape.options.strokeWidth,
         isShiftPressed.current
       );
@@ -347,6 +340,7 @@ export default function Canvas({ elementRef }) {
         x,
         y,
         tool,
+        color,
         radius,
         isShiftPressed.current
       );
@@ -364,7 +358,8 @@ export default function Canvas({ elementRef }) {
         };
         setElements(elementsCopy, true);
       } else {
-        const { id, x1, x2, y1, y2, type, offsetX, offsetY } = selectedElement;
+        const { id, x1, x2, y1, y2, type, offsetX, offsetY, roughShape } =
+          selectedElement;
         const width = x2 - x1;
         const height = y2 - y1;
         const updateX = x - offsetX;
@@ -378,13 +373,15 @@ export default function Canvas({ elementRef }) {
           updateX + width,
           updateY + height,
           type,
-          elements[id].roughShape.options.strokeWidth,
+          roughShape.options.stroke,
+          roughShape.options.strokeWidth,
           isShiftPressed.current
         );
       }
     } else if (action === 'resizing') {
       console.log('Resizing', selectedElement);
-      const { id, type, position, ...coordinates } = selectedElement;
+      const { id, type, position, roughShape, ...coordinates } =
+        selectedElement;
       const { x1, y1, x2, y2 } = resizedCoords(x, y, position, coordinates);
       updateElement(
         elements,
@@ -395,7 +392,7 @@ export default function Canvas({ elementRef }) {
         x2,
         y2,
         type,
-        elements[id].roughShape.options.strokeWidth,
+        roughShape.options.strokeWidth,
         isShiftPressed.current
       );
     }

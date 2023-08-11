@@ -11,7 +11,7 @@ export default function AppStore({ children }) {
   const [message, setMessage] = useState(null);
   const [error, setError] = useState('Errors');
   const [color, setColor] = useState('#000');
-  const [radius, setRadius] = useState(2);
+  const [radius, setRadius] = useState(5);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [actions, setActions] = useState([]);
   const [currentPosition, setCurrentPosition] = useState(-1);
