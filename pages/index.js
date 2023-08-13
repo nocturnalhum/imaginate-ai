@@ -40,7 +40,7 @@ export default function Home() {
         onConfirm={handleConfirmClear}
         onCancel={handleCancelClear}
       />
-      <div className='h-[92vh] w-full max-w-7xl mx-auto group perspective'>
+      <div className='h-[92dvh] w-full max-w-7xl mx-auto group perspective'>
         <Header />
         <div
           className={`relative flex h-full w-full glass-border duration-500 preserve-3d touch-none ${
@@ -56,7 +56,7 @@ export default function Home() {
         </div>
         <div
           className={`absolute top-10 duration-300 ${
-            !showTools ? '-translate-x-[200%]' : '-translate-x-[100%]'
+            !showTools ? '-translate-x-[100%]' : 'translate-x-[0%]'
           } `}
         >
           <Tools />
