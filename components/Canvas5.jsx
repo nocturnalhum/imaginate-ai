@@ -35,7 +35,8 @@ export default function Canvas({ elementRef }) {
       ctx.canvas.height = elementRef.current.clientHeight;
       ctx.canvas.style.width = `${elementRef.current.clientWidth}px`;
       ctx.canvas.style.height = `${elementRef.current.clientHeight}px`;
-      elements.forEach(({ roughShape }) => roughCanvas.draw(roughShape));
+      elements.forEach((element) => drawElement(roughCanvas, ctx, element));
+      // elements.forEach(({ roughShape }) => roughCanvas.draw(roughShape));
     };
     window.addEventListener('resize', resize);
     return () => window.removeEventListener('resize', resize);
@@ -117,6 +118,7 @@ export default function Canvas({ elementRef }) {
         isShiftPressed.current
       );
       setElements((prev) => [...prev, element]);
+      console.log('Element Set', elements);
       setSelectedElement(element);
       setAction(tool === 'text' ? 'writing' : 'draw');
     }
@@ -220,19 +222,22 @@ export default function Canvas({ elementRef }) {
     ) {
       const { x1, y1, x2, y2 } = adjustElementCoord(elements[index]);
       console.log('Mouse Up', roughShape);
-      updateElement(
-        elements,
-        setElements,
-        id,
-        x1,
-        y1,
-        x2,
-        y2,
-        type,
-        roughShape.options.stroke,
-        roughShape.options.strokeWidth,
-        isShiftPressed.current
-      );
+      // If x and y is only a single point don't create Element
+      if (x1 !== x2 && y1 !== y2) {
+        updateElement(
+          elements,
+          setElements,
+          id,
+          x1,
+          y1,
+          x2,
+          y2,
+          type,
+          roughShape.options.stroke,
+          roughShape.options.strokeWidth,
+          isShiftPressed.current
+        );
+      }
     }
     setAction('none');
     setSelectedElement(null);

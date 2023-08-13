@@ -183,21 +183,28 @@ const positionWithinElement = (x, y, element) => {
           : null;
       return onEllipse || insideEllipse;
     case 'pen':
-      const betweenAnyPoint = element.points.some((point, index) => {
-        const nextPoint = element.points[index + 1];
-        if (!nextPoint) return false;
-        return (
-          onLine(
-            point.x,
-            point.y,
-            nextPoint.x,
-            nextPoint.y,
-            x,
-            y,
-            element.radius
-          ) != null
-        );
-      });
+      let betweenAnyPoint;
+      if (element.points.length === 1) {
+        betweenAnyPoint =
+          Math.abs(x - element.points[0].x) < 5 &&
+          Math.abs(y - element.points[0].y) < 5;
+      } else {
+        betweenAnyPoint = element.points.some((point, index) => {
+          const nextPoint = element.points[index + 1];
+          if (!nextPoint) return false;
+          return (
+            onLine(
+              point.x,
+              point.y,
+              nextPoint.x,
+              nextPoint.y,
+              x,
+              y,
+              element.radius
+            ) != null
+          );
+        });
+      }
       return betweenAnyPoint ? 'inside' : null;
     default:
       throw new Error(`Type not recognised: ${type}`);
@@ -232,6 +239,7 @@ const distance = (a, b) =>
 // =============<<< CursorForPosition >>>====================================
 // ==========================================================================
 export const cursorForPosition = (position) => {
+  console.log('Position', position);
   switch (position) {
     case 'tl':
     case 'br':

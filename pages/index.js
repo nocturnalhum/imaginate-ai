@@ -32,7 +32,7 @@ export default function Home() {
   return (
     <main
       className={
-        'min-h-screen flex flex-col items-center bg-desk text-gray-100 overflow-hidden'
+        'min-h-screen flex-col items-center bg-desk text-gray-100 overflow-hidden'
       }
     >
       <ConfirmationModal
@@ -40,10 +40,10 @@ export default function Home() {
         onConfirm={handleConfirmClear}
         onCancel={handleCancelClear}
       />
-      <div className='h-[80vh] w-full max-w-5xl mx-auto group perspective'>
+      <div className='h-[92vh] w-full max-w-7xl mx-auto group perspective'>
         <Header />
         <div
-          className={`relative h-full w-full glass-border duration-500 preserve-3d touch-none ${
+          className={`relative flex h-full w-full glass-border duration-500 preserve-3d touch-none ${
             isFlipped ? 'rotate-y-180 ' : ''
           }`}
         >
@@ -54,20 +54,19 @@ export default function Home() {
             <Card2 />
           </div>
         </div>
-        <div className='relative w-full'>
-          <div
-            className={`absolute w-full top-0 duration-300 ${
-              !showTools ? 'translate-y-[250%]' : 'translate-y-0'
-            } `}
-          >
-            <Tools />
-          </div>
-          <div
-            className={`absolute w-full top-0 duration-300 ${
-              showTools ? 'translate-y-[250%]' : 'translate-y-0'
-            } `}
-          >
-            {/* <StableDiffusion
+        <div
+          className={`absolute top-10 duration-300 ${
+            !showTools ? '-translate-x-[200%]' : '-translate-x-[100%]'
+          } `}
+        >
+          <Tools />
+        </div>
+        <div
+          className={`absolute top-0 duration-300 ${
+            showTools ? 'translate-y-[100%]' : 'translate-y-0'
+          } `}
+        >
+          {/* <StableDiffusion
               canvasRef={canvasRef}
               setFlip={setFlip}
               message={message}
@@ -78,7 +77,6 @@ export default function Home() {
               error={error}
               setError={setError}
             /> */}
-          </div>
         </div>
       </div>
     </main>

@@ -16,6 +16,7 @@ export const useHistory = (initialState) => {
       setHistory([...updatedState, newState]);
       setIndex((prev) => prev + 1);
     }
+    console.log('History Set', history);
   };
 
   const undo = () => index > 0 && setIndex((prev) => prev - 1);

@@ -109,24 +109,24 @@ export default function Tools() {
   };
 
   return (
-    <div className='w-full h-20 my-2 text-gray-100 bg-gray-400/50 rounded-full'>
-      <div className='flex justify-between items-center w-full h-full p-3 '>
+    <div className='w-screen h-[92vh] my-6 max-w-sm glass-border text-gray-100 bg-gray-500/20 p-3 m-3 rounded-xl'>
+      <div className='flex flex-col justify-between items-start w-full h-full p-3 '>
         <div className='flex flex-col items-center justify-center mr-3 p-3 rounded-xl drop-shadow-md shadow-lg select-none'>
           <h1 className='font-medium text-sm text-gray-100'>Color</h1>
           <PopoverPicker color={color} onChange={setColor} />
         </div>
         <button
           onClick={() => setTool('pen')}
-          className={`bg-black p-3 rounded-md border-r-gray-400 hover:opacity-80 ${
+          className={`bg-black p-3 rounded-t-md border-b-2 border-b-gray-400 hover:opacity-80 ${
             tool === 'pen' ? 'opacity-100' : 'opacity-50'
           }`}
         >
           <PiPaintBrush size={25} />
         </button>
-        <div className='pl-3'>
+        <div className='flex flex-col'>
           <button
             onClick={() => setTool('rectangle')}
-            className={`bg-black p-3 rounded-l-md border-r border-r-gray-400 hover:opacity-80 ${
+            className={`bg-black p-3 border-b-2 border-b-gray-400 hover:opacity-80 ${
               tool === 'rectangle' ? 'opacity-100' : 'opacity-50'
             }`}
           >
@@ -134,7 +134,7 @@ export default function Tools() {
           </button>
           <button
             onClick={() => setTool('ellipse')}
-            className={`bg-black p-3  border-r border-r-gray-400 hover:opacity-80 ${
+            className={`bg-black p-3 border-b-2 border-b-gray-400 hover:opacity-80 ${
               tool === 'ellipse' ? 'opacity-100' : 'opacity-50'
             }`}
           >
@@ -142,7 +142,7 @@ export default function Tools() {
           </button>
           <button
             onClick={() => setTool('line')}
-            className={`bg-black p-3 hover:opacity-80 ${
+            className={`bg-black p-3 border-b-2 border-b-gray-400 hover:opacity-80 ${
               tool === 'line' ? 'opacity-100' : 'opacity-50'
             }`}
           >
@@ -150,7 +150,7 @@ export default function Tools() {
           </button>
           <button
             onClick={() => setTool('selection')}
-            className={`bg-black p-3 border-l border-l-gray-400 hover:opacity-80 ${
+            className={`bg-black p-3 border-b-2 border-b-gray-400 hover:opacity-80 ${
               tool === 'selection' ? 'opacity-100' : 'opacity-50'
             }`}
           >
@@ -158,7 +158,7 @@ export default function Tools() {
           </button>
           <button
             onClick={() => setTool('delete')}
-            className={`bg-black p-3 rounded-r-md border-l border-l-gray-400 hover:opacity-80 ${
+            className={`bg-black p-3 rounded-b-md border-b-2 border-b-gray-400 hover:opacity-80 ${
               tool === 'delete' ? 'opacity-100' : 'opacity-50'
             }`}
           >
@@ -185,7 +185,7 @@ export default function Tools() {
         </div>
         <form
           onClick={handleClick}
-          className='flex items-center justify-center h-12 w-12 rounded-full bg-black text-white select-none cursor-pointer hover:opacity-70'
+          className='rounded-full bg-black p-3 cursor-pointer hover:opacity-70'
         >
           <BsImages size={25} />
           <input
