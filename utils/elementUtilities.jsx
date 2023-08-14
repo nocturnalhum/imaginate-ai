@@ -23,7 +23,6 @@ export function createShape(
   let x2Adjusted = x2;
   let y2Adjusted = y2;
 
-  console.log('CreateShape colour', color);
   if (isShiftPressed) {
     // Adjust x2 and y2 to ensure it draws a square or circle
     const width = x2 - x1;
@@ -177,10 +176,18 @@ const positionWithinElement = (x, y, element) => {
       const dx = (x - cx) / rx;
       const dy = (y - cy) / ry;
       const insideEllipse = dx * dx + dy * dy <= 1.5 ? 'inside' : null;
-      const onEllipse =
-        dx * dx + dy * dy > 1.5 && dx * dx + dy * dy <= 2.5
-          ? 'onEllipse'
-          : null;
+      let onEllipse;
+      if (element.x1 === element.x2 && element.y1 === element.y2) {
+        onEllipse =
+          Math.abs(x - element.x1) < 5 && Math.abs(y - element.y2) < 5
+            ? 'onEllipse'
+            : null;
+      } else {
+        onEllipse =
+          dx * dx + dy * dy > 1.5 && dx * dx + dy * dy <= 2.5
+            ? 'onEllipse'
+            : null;
+      }
       return onEllipse || insideEllipse;
     case 'pen':
       let betweenAnyPoint;
@@ -340,6 +347,5 @@ export const updateElement = (
     default:
       throw new Error(`Type not recognised: ${type}`);
   }
-
   setElements(elementsCopy, true);
 };

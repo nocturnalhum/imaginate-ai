@@ -117,8 +117,9 @@ export default function Canvas({ elementRef }) {
         radius,
         isShiftPressed.current
       );
-      setElements((prev) => [...prev, element]);
+      console.log('Mouse Down Set Element');
       console.log('Element Set', elements);
+      setElements((prev) => [...prev, element]);
       setSelectedElement(element);
       setAction(tool === 'text' ? 'writing' : 'draw');
     }
@@ -224,20 +225,21 @@ export default function Canvas({ elementRef }) {
       console.log('Mouse Up', roughShape);
       // If x and y is only a single point don't create Element
       if (x1 !== x2 && y1 !== y2) {
-        updateElement(
-          elements,
-          setElements,
-          id,
-          x1,
-          y1,
-          x2,
-          y2,
-          type,
-          roughShape.options.stroke,
-          roughShape.options.strokeWidth,
-          isShiftPressed.current
-        );
+        console.log('x1 !== x2 && y1 !== y2', x1 !== x2 && y1 !== y2);
       }
+      updateElement(
+        elements,
+        setElements,
+        id,
+        x1,
+        y1,
+        x2,
+        y2,
+        type,
+        roughShape.options.stroke,
+        roughShape.options.strokeWidth,
+        isShiftPressed.current
+      );
     }
     setAction('none');
     setSelectedElement(null);

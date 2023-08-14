@@ -92,8 +92,7 @@ export default function Tools() {
 
       // context.clearRect(0, 0, canvas.width, canvas.height);
       // context.drawImage(image, startX, startY, imageWidth, imageHeight);
-      // const drawing = canvasRef.current.toDataURL('image/png');
-      localStorage.setItem('drawing', drawing);
+      // localStorage.setItem('drawing', drawing);
       // The addAction function in Canvas.jsx:
       /** Possibly refactor and add function to utils to reduce repetition */
       setActions((prevActions) => {
@@ -109,7 +108,7 @@ export default function Tools() {
   };
 
   return (
-    <div className='w-screen h-[92dvh] my-6 max-w-sm glass-border text-gray-100 bg-gray-500/20 p-3 m-3 rounded-xl'>
+    <div className='w-screen h-[92dvh] my-6 max-w-sm glass-border text-gray-100 bg-gray-500/10 p-3 rounded-xl backdrop-blur-sm'>
       <div className='flex flex-col justify-between items-start w-full h-full p-3 '>
         <div className='flex flex-col items-center justify-center mr-3 p-3 rounded-xl drop-shadow-md shadow-lg select-none'>
           <h1 className='font-medium text-sm text-gray-100'>Color</h1>
