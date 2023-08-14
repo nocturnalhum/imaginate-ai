@@ -329,6 +329,9 @@ export const updateElement = (
     case 'line':
     case 'rectangle':
     case 'ellipse':
+      if (x1 === x2 && y1 === y2) {
+        break;
+      }
       elementsCopy[id] = createShape(
         id,
         x1,
