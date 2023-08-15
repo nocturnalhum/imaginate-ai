@@ -27,7 +27,7 @@ module.exports = {
   theme: {
     extend: {
       backgroundImage: {
-        desk: "url('/desk-surface.jpg')",
+        desk: "url('/desk-surface-compressed.jpg')",
       },
       boxShadow: {
         thumb: '0 0 0 8px rgba(104,117,217,0.2)',

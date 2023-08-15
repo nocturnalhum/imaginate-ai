@@ -32,7 +32,7 @@ export default function Home() {
   return (
     <main
       className={
-        'min-h-screen flex-col items-center bg-desk text-gray-100 overflow-hidden'
+        'min-h-screen flex-col items-center bg-desk bg-cover text-gray-100 overflow-hidden'
       }
     >
       <ConfirmationModal
@@ -40,7 +40,7 @@ export default function Home() {
         onConfirm={handleConfirmClear}
         onCancel={handleCancelClear}
       />
-      <div className='h-[92dvh] w-full max-w-7xl mx-auto group perspective'>
+      <div className='h-[92dvh] w-[95dvw] max-w-7xl mx-auto group perspective'>
         <Header />
         <div
           className={`relative flex h-full w-full glass-border duration-500 preserve-3d touch-none ${

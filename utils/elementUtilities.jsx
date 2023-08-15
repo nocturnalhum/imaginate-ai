@@ -73,6 +73,10 @@ export function drawElement(roughCanvas, context, element) {
     case 'line':
     case 'rectangle':
     case 'ellipse':
+      // if (element.x1 === element.x2 && element.y1 === element.y2) {
+      //   console.log('Breaking');
+      //   break;
+      // }
       roughCanvas.draw(element.roughShape);
       break;
     case 'pen':
@@ -329,9 +333,10 @@ export const updateElement = (
     case 'line':
     case 'rectangle':
     case 'ellipse':
-      if (x1 === x2 && y1 === y2) {
-        break;
-      }
+      // if (x1 === x2 && y1 === y2) {
+      //   console.log('Breaking');
+      //   break;
+      // }
       elementsCopy[id] = createShape(
         id,
         x1,

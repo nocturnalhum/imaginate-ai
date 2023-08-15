@@ -318,7 +318,6 @@ export default function Canvas({ elementRef }) {
   // =============================================================================
   const handleTouchMove = (e) => {
     e.preventDefault();
-
     const { clientX, clientY } = e.touches[0];
     const rect = e.target.getBoundingClientRect();
     const x = clientX - rect.left;
@@ -352,7 +351,6 @@ export default function Canvas({ elementRef }) {
       );
     } else if (action === 'moving') {
       if (selectedElement.type === 'pen') {
-        console.log('PEN Touch', selectedElement);
         const newPoints = selectedElement.points.map((_, index) => ({
           x: x - selectedElement?.xOffsets[index],
           y: y - selectedElement?.yOffsets[index],
